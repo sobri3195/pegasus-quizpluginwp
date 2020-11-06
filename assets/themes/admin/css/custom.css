@@ -1,0 +1,262 @@
+/** 
+============================================================================
+========================custom css by developer ============================
+============================================================================
+*/
+
+body .select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #444;
+  line-height: 40px;
+}
+
+body .select2-container .select2-selection--single {
+  height: 40px;
+  border: 1px solid #d0cfcf;
+}
+
+body .select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 40px;
+}
+
+span.select2.select2-container {
+  width: 100% !important;
+}
+
+table img.listing_img {
+  width: 40px;
+  height: 40px;
+}
+
+table .listing_icon {
+  font-size: 30px;
+  text-align: center;
+}
+
+.iconpicker-popover table.table-icons .btn-icon i {
+  color: #000;
+  font-size: 20px;
+}
+
+.new-text-div {
+  display: inline-block;
+  width: 100%;
+}
+
+.bootstrap-tagsinput {
+  width: 100%;
+}
+
+.vertical_tab_menu #v-pills-tab {
+  border: 1px solid #e4e6fc;
+  border-radius: 5px;
+}
+
+.vertical_tab_menu #v-pills-tab a:hover {
+  background: #f7f7f7;
+  color: #000;
+}
+
+.vertical_tab_menu #v-pills-tab a {
+  border-bottom: 1px solid;
+}
+
+.no_pointer {
+  pointer-events: none;
+}
+
+.border-bottom-1 {
+  border-bottom: 1px solid #ccc;
+}
+
+.border-top-1 {
+  border-bottom: 1px solid #ccc;
+}
+
+.product_uploded_image img.img-thumbnail {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+}
+
+.model_1000 {
+  max-width: fit-content !important;
+}
+
+.tab_varient_field span.select2.select2-container.select2-container--default {
+  width: 100% !important;
+}
+
+#imagemodal .model_1000 img#imagepreview {
+  max-width: 900px;
+}
+
+.img_thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  right: 20px;
+  top: 20px;
+  position: absolute;
+}
+
+body .form-group {
+  position: relative;
+}
+
+.ms-selectable,
+.ms-selection {
+  width: 50%;
+  float: left;
+}
+
+.required {
+  color: red;
+}
+
+.has-error .form-control {
+  border-color: #e74a25;
+  box-shadow: none !important;
+}
+
+.has-error .form-control {
+  border-bottom: 1px solid #e74a25;
+}
+
+.has-warning .form-control {
+  border-bottom: 1px solid #ffb136;
+}
+
+.has-error label {
+  color: #e74a25;
+}
+
+.has-error .form-error {
+  color: #e74a25;
+}
+
+body label#field_name_label {
+  border-color: #f5f5f5;
+  background: #fff;
+}
+
+img.img-thumb.company_logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.question_img_block img.question_image {
+  height: 60px;
+  width: 60px;
+  object-fit: contain;
+  position: absolute;
+  top: 20px;
+  right: 0;
+}
+
+body .list_quiz_question select.custom-select {
+  width: 70px !important;
+}
+
+.page img.image_preview {
+  width: 50px;
+  height: 40px;
+  position: absolute;
+  right: 0;
+  top: 29px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+.bg-red {
+    background-color: #cd201f !important;
+}
+.bg-yellow {
+    background-color: #f1c40f !important;
+}
+.bg-green {
+    background-color: #5eba00 !important;
+}
+.bg-orange {
+    background-color: #fd9644 !important;
+}
+#table_question tbody tr td li{
+  list-style-type: none;
+}
+
+/*****************************************************************************************************
+************************************* RTL LANGUAGE CSS ***********************************************
+/*****************************************************************************************************/
+
+.rtl_language .main-content {
+  padding-right: 280px;
+  padding-left: 30px;
+}
+
+.rtl_language .main-sidebar {
+  left: auto;
+  right: 0;
+}
+
+.rtl_language.sidebar-mini select.custom-select.custom-select-sm.form-control.form-control-sm {
+  padding-right: 30px !important;
+}
+
+body.rtl_language.sidebar-mini .main-content,
+body.sidebar-mini .main-footer {
+  padding-left: 30px !important;
+  padding-right: 90px !important;
+}
+
+body.rtl_language.sidebar-mini .main-sidebar:after {
+  left: auto !important;
+  right: 0;
+}
+
+body.rtl_language.sidebar-mini .navbar {
+  left: 5px !important;
+  right: 50px !important;
+}
+
+nav.navbar.navbar-expand-lg.main-navbar form.form-inline.ml-auto {
+  margin-right: unset !important;
+}
+
+body.rtl_language.sidebar-mini .navbar form.form-inline.ml-auto {
+  margin-right: unset !important;
+}
+
+body.rtl_language .navbar {
+  left: 5px;
+  right: 250px;
+}
+
+.remove_this_input {
+  cursor: pointer;
+}
+
+.admin_footer_section .img_content img.field_img {
+  position: absolute;
+  width: 50px;
+  height: 40px;
+  object-fit: contain;
+  bottom: 18px;
+  right: 0;
+}
+
+
+/*****************************************************************************************************
+************************************* END RTL LANGUAGE CSS ********************************************
+/****************************************************************************************************/
+
+img.testimonial_list_profile {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+  border-radius: 50px;
+}
+
+.footer_sections .card-body {
+  max-height: 400px;
+  overflow-y: scroll;
+}

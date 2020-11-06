@@ -1,0 +1,14 @@
+{
+  "description": "The CodeIgniter framework",
+  "name": "codeigniter/framework",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.2.4",
+    "phpmailer/phpmailer": "^6.1",
+    "rap2hpoutre/fast-excel": "^1.7",
+    "needim/noty": "^3.1"
+  },
+  "require-dev": {
+    "mikey179/vfsStream": "1.1.*"
+  }
+}

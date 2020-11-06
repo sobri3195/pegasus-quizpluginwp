@@ -1,0 +1,156 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+class Contact extends Admin_Controller {
+    /**
+     * @var string
+     */
+    private $_redirect_url;
+    /**
+     * Constructor
+     */
+    function __construct() {
+        parent::__construct();
+        // load the users model
+        $this->load->model('ContactModel');
+        // set constants
+        define('REFERRER', "referrer");
+        define('THIS_URL', base_url('admin/contact'));
+        define('DEFAULT_LIMIT', 10);
+        define('DEFAULT_OFFSET', 0);
+        define('DEFAULT_SORT', "created");
+        define('DEFAULT_DIR', "DESC");
+        // use the url in session (if available) to return to the previous filter/sorted/paginated list
+        if ($this->session->userdata(REFERRER)) {
+            $this->_redirect_url = $this->session->userdata(REFERRER);
+        } else {
+            $this->_redirect_url = THIS_URL;
+        }
+    }
+    /**************************************************************************************
+     * PUBLIC FUNCTIONS
+     **************************************************************************************/
+    /**
+     * Message list page
+     */
+    function index() {
+        // get parameters
+        $limit = $this->input->get('limit') ? $this->input->get('limit', TRUE) : DEFAULT_LIMIT;
+        $offset = $this->input->get('offset') ? $this->input->get('offset', TRUE) : DEFAULT_OFFSET;
+        $sort = $this->input->get('sort') ? $this->input->get('sort', TRUE) : DEFAULT_SORT;
+        $dir = $this->input->get('dir') ? $this->input->get('dir', TRUE) : DEFAULT_DIR;
+        // get filters
+        $filters = array();
+        if ($this->input->get('name')) {
+            $filters['name'] = $this->input->get('name', TRUE);
+        }
+        if ($this->input->get('email')) {
+            $filters['email'] = $this->input->get('email', TRUE);
+        }
+        if ($this->input->get('title')) {
+            $filters['title'] = $this->input->get('title', TRUE);
+        }
+        if ($this->input->get('created')) {
+            $filters['created'] = date('Y-m-d', strtotime(str_replace('-', '/', $this->input->get('created', TRUE))));
+        }
+        // build filter string
+        $filter = "";
+        foreach ($filters as $key => $value) {
+            $filter.= "&{$key}={$value}";
+        }
+        // save the current url to session for returning
+        $this->session->set_userdata(REFERRER, THIS_URL . "?sort={$sort}&dir={$dir}&limit={$limit}&offset={$offset}{$filter}");
+        // are filters being submitted?
+        if ($this->input->post()) {
+            if ($this->input->post('clear')) {
+                // reset button clicked
+                redirect(THIS_URL);
+            } else {
+                // apply the filter(s)
+                $filter = "";
+                if ($this->input->post('name')) {
+                    $filter.= "&name=" . $this->input->post('name', TRUE);
+                }
+                if ($this->input->post('email')) {
+                    $filter.= "&email=" . $this->input->post('email', TRUE);
+                }
+                if ($this->input->post('title')) {
+                    $filter.= "&title=" . $this->input->post('title', TRUE);
+                }
+                if ($this->input->post('created')) {
+                    $filter.= "&created=" . $this->input->post('created', TRUE);
+                }
+                // redirect using new filter(s)
+                redirect(THIS_URL . "?sort={$sort}&dir={$dir}&limit={$limit}&offset={$offset}{$filter}");
+            }
+        }
+        // get list
+        $messages = $this->ContactModel->get_all($limit, $offset, $filters, $sort, $dir);
+        // build pagination
+        $this->pagination->initialize(array('base_url' => THIS_URL . "?sort={$sort}&dir={$dir}&limit={$limit}{$filter}", 'total_rows' => $messages['total'], 'per_page' => $limit));
+        // setup page header data
+        $this->set_title(lang('messages'));
+        $data = $this->includes;
+        // set content data
+        $content_data = array('this_url' => THIS_URL, 'messages' => $messages['results'], 'total' => $messages['total'], 'filters' => $filters, 'filter' => $filter, 'pagination' => $this->pagination->create_links(), 'limit' => $limit, 'offset' => $offset, 'sort' => $sort, 'dir' => $dir);
+        // load views
+        $data['content'] = $this->load->view('admin/contact/list', $content_data, TRUE);
+        $this->load->view($this->template, $data);
+    }
+    /**
+     * Export list to CSV
+     */
+    function export() {
+        // get parameters
+        $sort = $this->input->get('sort') ? $this->input->get('sort', TRUE) : DEFAULT_SORT;
+        $dir = $this->input->get('dir') ? $this->input->get('dir', TRUE) : DEFAULT_DIR;
+        // get filters
+        $filters = array();
+        if ($this->input->get('name')) {
+            $filters['name'] = $this->input->get('name', TRUE);
+        }
+        if ($this->input->get('email')) {
+            $filters['email'] = $this->input->get('email', TRUE);
+        }
+        if ($this->input->get('title')) {
+            $filters['title'] = $this->input->get('title', TRUE);
+        }
+        if ($this->input->get('created')) {
+            $filters['created'] = date('Y-m-d', strtotime(str_replace('-', '/', $this->input->get('created', TRUE))));
+        }
+        // get all messages
+        $messages = $this->ContactModel->get_all(0, 0, $filters, $sort, $dir);
+        if ($messages['total'] > 0) {
+            // export the file
+            array_to_csv($messages['results'], "messages");
+        } else {
+            // nothing to export
+            $this->session->set_flashdata('error', lang('core_error_no_results'));
+            redirect($this->_redirect_url);
+        }
+        exit;
+    }
+    /**************************************************************************************
+     * AJAX FUNCTIONS
+     **************************************************************************************/
+    /**
+     * Marks email message as read
+     *
+     * @param  int $id
+     * @return boolean
+     */
+    function read($id = NULL) {
+        if ($id) {
+            $user_id = isset($this->user['id']) ? $this->user['id'] : 0;
+            $read = $this->ContactModel->read($id, $user_id);
+            if ($read) {
+                $results['success'] = lang('contact_msg_updated');
+            } else {
+                $results['error'] = lang('contact_error_update_failed');
+            }
+        } else {
+            $results['error'] = lang('contact_error_update_failed');
+        }
+        display_json($results);
+        exit;
+    }
+}
